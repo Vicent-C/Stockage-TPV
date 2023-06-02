@@ -79,11 +79,11 @@ $nombre = $nombre_obt->fetch_array();
                                     <tr>
                                         <td><?php echo $stock['codigo_fruta']; ?></td>
                                         <td><?php echo $stock['nombre']; ?></td>
-                                        <td><?php echo $stock['stock']; ?></td>
+                                        <td><?php echo $stock['stock']; ?> kg</td>
                                         <td><?php echo $stock['precio']; ?>€</td>
                                         <td><?php 
                                       $total=$stock['stock']*$stock['precio'];
-                                      echo $total;
+                                      echo round($total,2);
                                     ;?> €</td>
                                     </tr>
 

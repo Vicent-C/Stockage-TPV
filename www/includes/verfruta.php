@@ -57,12 +57,10 @@ $fruta = $resultado->fetch_array();
         </nav>
         <article class="col-12">
             <h4 class="display-6 text-center">Información de <?php echo $fruta['nombre']; ?></h4>
-        </article>
-        
+        </article>  
         <article id="viewfru" class="col-12 bg-white h-100 p-3 bg-light border border-secondary rounded my-3 justify-content-center" style="--bs-border-opacity: .5;">       
         <!--    Selector de tipo de orden   -->
                 <div id="modfruta" class="d-flex flex-column container my-3 shadow bg-primary-subtle btn border border-secondary-subtle">
-
                     <form id="" class="table-responsive order-2" action="" method="post">
                     <div class="table-responsive">
                       <table class="table table-striped table-primary table-responsive table-hover">
@@ -77,7 +75,6 @@ $fruta = $resultado->fetch_array();
                                 </tr>
                             </thead>
                             <tbody>
-
                                     <tr>
                                         <td><?php echo $fruta['codigo_fruta']; ?></td>
                                         <td><?php echo $fruta['nombre']; ?></td>
@@ -85,20 +82,16 @@ $fruta = $resultado->fetch_array();
                                         <td><?php echo $fruta['origen']; ?></td>
                                         <td><?php echo $fruta['temporada']; ?></td>
                                         <td><?php echo $fruta['clase']; ?></td>
-
                                     </tr>
-
                             </tbody>
                       </table>
                     </div>
                         <div class="row container">
-
                         </div>
                     </form>
                 </div>    
         </article>
     </section>
-
   </main>
   <?php 
   include 'footer.php';

@@ -129,7 +129,7 @@ $username = $_SESSION['Usuario'];
                                   echo "<tr>";
                                   echo     "<td>" . $row['codigo_fruta'] . "</td>"; 
                                   echo     "<td>" . $row['nombre'] . "</td>";
-                                  echo     "<td>" . $row['stock'] . "</td>";
+                                  echo     "<td>" . $row['stock'] . " kg</td>";
                                   echo     "<td><a id='' href='./includes/verstock.php?fruta=" . $row['codigo_fruta'] . "' role='button' class='btn btn-outline-secondary' data-toggle='modal'><i class='fas fa-eye'></i></a></td>";
                                   echo "</tr>";
                                 }
@@ -139,7 +139,7 @@ $username = $_SESSION['Usuario'];
                                   echo "<tr>";
                                   echo     "<td>" . $row['codigo_fruta'] . "</td>"; 
                                   echo     "<td>" . $row['nombre'] . "</td>";
-                                  echo     "<td>" . $row['stock'] . "</td>";
+                                  echo     "<td>" . $row['stock'] . " kg</td>";
                                   echo     "<td><a id='' href='./includes/verstock.php?fruta=" . $row['codigo_fruta'] . "' role='button' class='btn btn-outline-secondary' data-toggle='modal'><i class='fas fa-eye'></i></a></td>";
                                   echo "</tr>";
                                 } 
