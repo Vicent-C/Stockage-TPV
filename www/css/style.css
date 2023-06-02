@@ -1,0 +1,63 @@
+/*    CSS COMÚN     */
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+#divbutton {
+  height: 150px;
+  width: 250px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+#artlog {
+  transform: scaleX(-1);
+}
+
+#bg-image-main {
+  background-image: url(./../img/bg-login.jpg);
+  transform: scaleX(-1);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/*    CSS LOGIN     */
+#divlogin {
+  height: 450px;
+  align-items: center;
+  background-color: rgba(129, 129, 129, 0.7);
+}
+
+#divwelcome {
+  height: 450px;
+}
+
+#hcaligr {
+  font-family: 'Dancing Script';
+  color: #F6F6F6;
+  font-size: 80px;
+  text-shadow: 2px 2px 1px black;
+}
+
+footer {
+  margin-top: auto;
+  height: 120px;
+}
+
+/*    CSS FRUTAS      */
+#viewfru{
+  height: 100%;
+}

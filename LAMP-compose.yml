@@ -1,0 +1,45 @@
+version: "3.1"
+services:
+    db:
+        image: mysql:8.0
+        ports: 
+            - "3306:3306"
+        command: 
+            - --default-authentication-plugin=mysql_native_password
+            - --sql-mode=
+        environment:
+            MYSQL_DATABASE: fruteria
+            MYSQL_PASSWORD: Proj#2023
+            MYSQL_ROOT_PASSWORD: Proj#2023
+            TZ: Europe/Madrid
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+            - ./conf:/etc/mysql/conf.d
+            - persistent:/var/lib/mysql
+        networks:
+            - default
+    www:
+        build: .
+        ports: 
+            - "80:80"
+        environment:
+            TZ: Europe/Madrid
+        volumes:
+            - ./www:/var/www/html
+        links:
+            - db
+        networks:
+            - default
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links: 
+            - db:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_USER: root
+            MYSQL_PASSWORD: Proj#2023
+            MYSQL_ROOT_PASSWORD: Proj#2023
+            TZ: Europe/Madrid
+volumes:
+    persistent:
