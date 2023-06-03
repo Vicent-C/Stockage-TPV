@@ -13,7 +13,7 @@ $username = $_SESSION['Usuario'];
 $id = $_GET['fruta'];
 
 // Consultar la fruta
-$consulta = "SELECT * FROM fruta WHERE codigo_fruta = $id";
+$consulta = "SELECT codigo_fruta,MIN(lineas_albaran.precio_kilo) AS precio_kilos, nombre, stock FROM fruta JOIN lineas_albaran WHERE fruta.codigo_fruta=lineas_albaran.fruta AND codigo_fruta = $id";
 $resultado = $connect->query($consulta);
 $stock = $resultado->fetch_array();
 /*
@@ -80,9 +80,9 @@ $nombre = $nombre_obt->fetch_array();
                                         <td><?php echo $stock['codigo_fruta']; ?></td>
                                         <td><?php echo $stock['nombre']; ?></td>
                                         <td><?php echo $stock['stock']; ?> kg</td>
-                                        <td><?php echo $stock['precio']; ?>€</td>
+                                        <td><?php echo $stock['precio_kilos']; ?>€</td>
                                         <td><?php 
-                                      $total=$stock['stock']*$stock['precio'];
+                                      $total=$stock['stock']*$stock['precio_kilos'];
                                       echo round($total,2);
                                     ;?> €</td>
                                     </tr>
