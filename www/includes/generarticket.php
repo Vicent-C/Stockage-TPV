@@ -11,8 +11,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
 $username = $_SESSION['Usuario'];
 //Recoger el número de la factura.
 $id = $_GET['factura'];
-
-// Consultar la fruta
+//Consultar la factura
 $consulta = "SELECT * FROM factura JOIN lineas_factura JOIN fruta WHERE factura.num_factura=lineas_factura.factura AND lineas_factura.fruta=fruta.codigo_fruta AND lineas_factura.kilos >0 AND factura.num_factura = $id";
 $resultado = $connect->query($consulta);
 
@@ -45,7 +44,7 @@ $content = " ";
 $content = '
 <table>
     <tr>
-        <td colspan="3" style="text-align:center"><h2>Stockage-TPV</h2></td>
+        <td colspan="4" style="text-align:center"><h2>Stockage-TPV</h2></td>
     </tr>
     <tr>
         <td style="text-align:center"><br></td>
@@ -55,30 +54,37 @@ $content = '
         <td style="text-align:center">Factura Simplificada Nº: ' . $id . ' <br></td>
         <td style="text-align:center">' . $fecha_final . '</td>
         <td style="text-align:center">Le atendió: ' . $username . '</td>
+        <td style="text-align:center"></td>
     </tr>
     <tr>
-        <td colspan="3" style="text-align:center">===============================================================================</td>
+        <td colspan="4" style="text-align:center">===============================================================================</td>
     </tr>
     <tr>
-        <td style="text-align:center;"><i>Kg.</i></td>
         <td style="text-align:center;"><i>Producto</i></td>
+        <td style="text-align:center;"><i>Kilos</i></td>
+        <td style="text-align:center;"><i>Precio/kg</i></td>
         <td style="text-align:center;"><i>Importe</i></td>
     </tr>
     <tr>
-        <td colspan="3" style="text-align:center">===============================================================================</td>
+        <td colspan="4" style="text-align:center">===============================================================================</td>
     </tr>
 ';
-$lineas=$resultado->num_rows;
-$num_linea = 0;
-$ivaPorcentaje= 0.21;
+//Declarar variables para evitar errores
+$precioUnid = 0;
+$cantidadUnid = 0;
+$totalPrecio = 0;
 while ($row = $resultado->fetch_array()) {
-    //Calcular el IVA de cada fruta
-    $iva = round($row['precio_kilo'] * $ivaPorcentaje, 2);
-    //Calcular el precio sin IVA
-    $precio_sin_iva = $row['precio_kilo'] - $iva;
-    $total = $row['kilos'] * $row['precio_kilo'];
-    $totalPrecio = $total++;
-    $num_linea = $num_linea + 1;
+//Calcular precios  
+$precioUnid = $row['precio_kilo'];
+$cantidadUnid = $row['kilos'];
+$subtotal = $precioUnid * $cantidadUnid;
+$totalPrecio = $subtotal;
+// Consulta para obtener el precio total sumando los resultados de las líneas con el mismo número de albarán
+$consultaSuma = "SELECT SUM(lineas_factura.kilos * lineas_factura.precio_kilo) AS total
+                 FROM lineas_factura
+                 WHERE lineas_factura.factura = " . $row['num_factura'];
+$stmtSuma = $connect->query($consultaSuma);
+$rowSuma = $stmtSuma->fetch_array();
 
 // Consulta para obtener la suma de las cantidades de unidades de las líneas con el mismo número de albarán
 $consultaSumaCantidades = "SELECT SUM(lineas_factura.kilos) AS total_cantidades
@@ -87,15 +93,26 @@ WHERE lineas_factura.factura = " . $row['num_factura'];
 $stmtSumaCantidades = $connect->query($consultaSumaCantidades);
 $rowSumaCantidades = $stmtSumaCantidades->fetch_array();
 $totalCantidades = $rowSumaCantidades['total_cantidades'];
+
+
+// Actualizar el valor de $cantidadUnid con la suma de las cantidades de unidades
 $cantidadUnid = $totalCantidades;
-    $nombre = $row['nombre'];
-    $precio = $row['precio_kilo'];
-    $kilos = $row['kilos'];
-    $precioFinal=round($precio*$kilos,2);
+
+//declarar variables para mostrar en el ticket.
+$kilos = $row['kilos'];
+$nombre = $row['nombre'];
+$precio = $row['precio_kilo'];
+//Calcular precio final de cada fruta que se ha comprado
+$total = round($precio*$kilos,2);
+//Calcular el total final de euros
+if ($rowSuma['total']) {
+    $totalPrecio += $rowSuma['total'];
+  }
     $content.= '    <tr>
-    <td style="text-align:center;"><i>' . $kilos . '</i></td>
     <td style="text-align:center;"><i>' . $nombre . '</i></td>
-    <td style="text-align:center;"><i>' . $precioFinal . '</i></td>
+    <td style="text-align:center;"><i>' . $kilos . '</i></td>
+    <td style="text-align:center;"><i>' . $precio . ' €</i></td>
+    <td style="text-align:center;"><i>' . $total . ' €</i></td>
 </tr>
 
 
@@ -104,18 +121,21 @@ $cantidadUnid = $totalCantidades;
 
 $content.='
 <tr>
-        <td colspan="3" style="text-align:center">===============================================================================</td>
+        <td colspan="4" style="text-align:center">===============================================================================</td>
     </tr>
 <tr>
-    <td style="text-align:center;">Total:(<i>' . $cantidadUnid . '</i>)</td>
-    <td style="text-align:center;"><i>' . $num_linea . '</i></td>
-    <td style="text-align:center;"><i>' . $totalPrecio . '</i></td>
+    <td style="text-align:center;"><i>' . $totalCantidades . ' kg</i></td>
+    <td style="text-align:center;"> </td>
+    <td style="text-align:center;">TOTAL:</td>
+    <td style="text-align:center;"> <i>' . round($rowSuma['total'],2) . ' €</i></td>
 </tr>
-
+<tr>
+    <td colspan="4" style="text-align:center;"></td>    
+</tr>
+<tr>
+    <td colspan="4" style="text-align:center;"><b>¡Gracias por su visita!</b></td>    
+</tr>
 <table>
-
-Total: ($num_linea)
-TOTAL/€: 
 
 ';
 
