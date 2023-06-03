@@ -75,7 +75,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
             // Obtener los datos de albaranes
             while ($filaAlbaranes = $resultadoAlbaranes->fetch_array()) {
                 $labels[] = $filaAlbaranes['fecha_entrada'];
-                $dataAlbaranes[] = $filaAlbaranes['precio'];
+                $dataAlbaranes[] = round($filaAlbaranes['precio'],2);;
             }
             ?>
             <script>
@@ -132,7 +132,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
             // Obtener los datos de albaranes
             while ($filaFactura = $resultadoFacturas->fetch_array()) {
                 $labels[] = $filaFactura['fecha_salida'];
-                $dataFacturas[] = $filaFactura['precio'];
+                $dataFacturas[] = round($filaFactura['precio'],2);
             }
 
             ?>
@@ -150,7 +150,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Kilos',
+                        label: 'Precio €',
                         data: dataFacturas,
                         borderColor:'rgba(78, 205, 99, 0.5)',
                         backgroundColor: 'rgba(78, 205, 99, 1)', // Color de las barras de albaranes
