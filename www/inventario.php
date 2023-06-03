@@ -11,7 +11,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
 
 $username = $_SESSION['Usuario'];
     //consulta para cuando se carga la página
-    $query_sin_filtro = "SELECT * FROM fruta WHERE estado = 'ALTA'";
+    $query_sin_filtro = "SELECT * FROM fruta";
     $stmt1 = $connect->query($query_sin_filtro);
 
 
@@ -119,6 +119,7 @@ $username = $_SESSION['Usuario'];
                         <th class="text-center">Código</th>
                         <th class="text-center">Nombre</th>
                         <th class="text-center">Kilos</th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">Más información</th>
                     </thead>
                     <tbody class="text-center">
@@ -130,6 +131,7 @@ $username = $_SESSION['Usuario'];
                                   echo     "<td>" . $row['codigo_fruta'] . "</td>"; 
                                   echo     "<td>" . $row['nombre'] . "</td>";
                                   echo     "<td>" . $row['stock'] . " kg</td>";
+                                  echo     "<td>" . $row['estado'] . "</td>";
                                   echo     "<td><a id='' href='./includes/verstock.php?fruta=" . $row['codigo_fruta'] . "' role='button' class='btn btn-outline-secondary' data-toggle='modal'><i class='fas fa-eye'></i></a></td>";
                                   echo "</tr>";
                                 }
@@ -140,6 +142,7 @@ $username = $_SESSION['Usuario'];
                                   echo     "<td>" . $row['codigo_fruta'] . "</td>"; 
                                   echo     "<td>" . $row['nombre'] . "</td>";
                                   echo     "<td>" . $row['stock'] . " kg</td>";
+                                  echo     "<td>" . $row['estado'] . "</td>";
                                   echo     "<td><a id='' href='./includes/verstock.php?fruta=" . $row['codigo_fruta'] . "' role='button' class='btn btn-outline-secondary' data-toggle='modal'><i class='fas fa-eye'></i></a></td>";
                                   echo "</tr>";
                                 } 

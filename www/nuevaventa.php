@@ -11,7 +11,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
 $username = $_SESSION['Usuario'];
 $mensaje = " ";
 // Consulta para obtener todas las frutas
-$sql_frutas = "SELECT * FROM fruta WHERE estado = 'ALTA'";
+$sql_frutas = "SELECT * FROM fruta WHERE kilos > 0";
 $result_frutas = $connect->query($sql_frutas);
 $factura_id = " " ;
 
