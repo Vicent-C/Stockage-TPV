@@ -107,7 +107,8 @@ $stmt1 = $connect->query($consulta);
                               echo     "<td>" . $row['fecha_salida'] . "</td>";
                               echo     "<td>" . $cantidadUnid . " uds</td>";
                               echo     "<td>" . round($rowSuma['total'],2) . " €</td>";
-                              echo     "<td><a id='' href='./includes/verfactura.php?factura=" . $row['num_factura'] . "' role='button' class='btn btn-outline-secondary' data-toggle='modal'><i class='fa-sharp fa-solid fa-circle-info'></i></a></td>";
+                              echo     "<td><a id='' href='./includes/verfactura.php?factura=" . $row['num_factura'] . "' role='button' class='btn btn-outline-secondary' data-toggle='modal'><i class='fa-sharp fa-solid fa-circle-info'></i></a><a href='./includes/generarticket.php?factura=" . $row['num_factura'] . "' role='button' class='btn btn-outline-secondary ms-2' data-toggle='modal'><i class='fas fa-print'></i></a></td>";
+                              echo     "<td></td>";
                               echo "</tr>";
                             }
                           

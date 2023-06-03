@@ -64,7 +64,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
 
             <?php
             // Obtener los datos de albaranes
-            $queryAlbaranes = "SELECT albaran, fecha_entrada, SUM(kilos) AS cantidad FROM lineas_albaran JOIN albaran WHERE lineas_albaran.albaran=albaran.num_albaran AND kilos > 0 GROUP BY albaran";
+            $queryAlbaranes = "SELECT albaran, fecha_entrada, SUM(precio_kilo*kilos) AS precio FROM lineas_albaran JOIN albaran WHERE lineas_albaran.albaran=albaran.num_albaran AND kilos > 0 GROUP BY albaran";
             $resultadoAlbaranes = $connect->query($queryAlbaranes);
 
             // Preparar los datos para la gráfica
@@ -75,7 +75,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
             // Obtener los datos de albaranes
             while ($filaAlbaranes = $resultadoAlbaranes->fetch_array()) {
                 $labels[] = $filaAlbaranes['fecha_entrada'];
-                $dataAlbaranes[] = $filaAlbaranes['cantidad'];
+                $dataAlbaranes[] = $filaAlbaranes['precio'];
             }
             ?>
             <script>
@@ -91,7 +91,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Kilos',
+                        label: 'Precio €',
                         data: dataAlbaranes,
                         borderColor:'rgba(255, 29, 29, 0.5)', //Color de las líneas
                         backgroundColor: 'rgba(255, 29, 29, 1)', // Color de las barras de albaranes
@@ -121,7 +121,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
 
 
             // Obtener los datos de albaranes
-            $queryFacturas = "SELECT factura, fecha_salida, SUM(kilos) AS cantidad FROM lineas_factura JOIN factura WHERE lineas_factura.factura=factura.num_factura AND kilos > 0 GROUP BY factura";
+            $queryFacturas = "SELECT factura, fecha_salida, SUM(precio_kilo*kilos) AS precio FROM lineas_factura JOIN factura WHERE lineas_factura.factura=factura.num_factura AND kilos > 0 GROUP BY factura";
             $resultadoFacturas = $connect->query($queryFacturas);
 
             // Preparar los datos para la gráfica
@@ -132,7 +132,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] !== TRUE){
             // Obtener los datos de albaranes
             while ($filaFactura = $resultadoFacturas->fetch_array()) {
                 $labels[] = $filaFactura['fecha_salida'];
-                $dataFacturas[] = $filaFactura['cantidad'];
+                $dataFacturas[] = $filaFactura['precio'];
             }
 
             ?>
