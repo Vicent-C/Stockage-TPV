@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["realizar_pedido"])) {
 
 
             // Insertar la línea de albarán
-            $sql_linea = "INSERT INTO lineas_albaran (kilos, precio_kilo, albaran, fruta) VALUES ($cantidad, (SELECT precio -0.30 AS precio_kilo FROM fruta WHERE codigo_fruta = $fruta_id), $albaran_id, $fruta_id)";
+            $sql_linea = "INSERT INTO lineas_albaran (kilos, precio_kilo, albaran, fruta) VALUES ($cantidad, (SELECT precio -0.60 AS precio_kilo FROM fruta WHERE codigo_fruta = $fruta_id), $albaran_id, $fruta_id)";
             $connect->query($sql_linea);
 
             // Actualizar la cantidad de fruta en stock
@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cancelar_pedido"])) {
                           echo "<tr><th>Código fruta</th><th>Fruta</th><th>Precio/kg €</th><th>Stock/kg</th><th>Kilos</th></tr>";
                           echo "</thead>";                  
                           while ($row = $result_frutas->fetch_assoc()) {
-                              $precio = $row['precio']-0.08;
+                              $precio = $row['precio']-0.60;
                               echo "<tr>";
                               echo "<td>".$row["codigo_fruta"]."</td>";
                               echo "<td>".$row["nombre"]."</td>";

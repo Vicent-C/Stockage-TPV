@@ -108,7 +108,7 @@ $username = $_SESSION['Usuario'];
 
                   <div class="mb-3 col-lg-6 col-sm-12 text-start">
                     <label for="formGroupExampleInput" class="form-label">Precio/kg €</label>
-                    <input id="formGroupExampleInput" type="number" step="0.01" min="0.45" name="precio" class="form-control" required>
+                    <input id="formGroupExampleInput" type="number" step="0.01" min="0.70" name="precio" class="form-control" required>
                   </div>
                   
                   <div class="mb-3 col-lg-6 col-sm-12 text-start">
